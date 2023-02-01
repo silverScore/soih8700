@@ -42,7 +42,7 @@ CREATE TABLE LongTermAdmin (
 	siGunGuCd char(3) NOT NULL, /* 시군구코드 */
 	adminNm varchar(100) NOT NULL, /* 기관이름 */
 	ratingCd char(15), /* 평가구분 */
-	ratingDate DATE NOT NULL, /* 평가일자 */
+	ratingDate date NOT NULL, /* 평가일자 */
 	ratingGrade char(1) NOT NULL, /* 평가등급 */
 	detailAddr varchar(1000) NOT NULL, /* 상세주소 */
 	telNo char(18) NOT NULL, /* 전화번호 */
@@ -243,28 +243,28 @@ COMMENT ON COLUMN InsttEtcDetail.tfMth IS '교통편';
 COMMENT ON COLUMN InsttEtcDetail.pkngEquip IS '주차시설';
 
 /* 기관유형코드 */
-CREATE TABLE TABLE6 (
+CREATE TABLE adminPttnCode (
 	adminPttnCd char(3) NOT NULL, /* 기관유형코드 */
 	adminPttnNm varchar(40) NOT NULL /* 기관유형이름 */
 );
 
-CREATE UNIQUE INDEX PK_TABLE6
-	ON TABLE6 (
+CREATE UNIQUE INDEX PK_adminPttnCode 
+	ON adminPttnCode (
 		adminPttnCd ASC
 	);
 
-ALTER TABLE TABLE6
+ALTER TABLE adminPttnCode 
 	ADD
-		CONSTRAINT PK_TABLE6
+		CONSTRAINT PK_adminPttnCode 
 		PRIMARY KEY (
 			adminPttnCd
 		);
 
-COMMENT ON TABLE TABLE6 IS '기관유형코드';
+COMMENT ON TABLE adminPttnCode  IS '기관유형코드';
 
-COMMENT ON COLUMN TABLE6.adminPttnCd IS '기관유형코드';
+COMMENT ON COLUMN adminPttnCode.adminPttnCd IS '기관유형코드';
 
-COMMENT ON COLUMN TABLE6.adminPttnNm IS '기관유형이름';
+COMMENT ON COLUMN adminPttnCode.adminPttnNm IS '기관유형이름';
 
 /* 일반현황 */
 CREATE TABLE GeneralSttusDetail (
@@ -507,11 +507,11 @@ COMMENT ON COLUMN locationCd.siGunGuNm IS '시군구명';
 
 ALTER TABLE LongTermAdmin
 	ADD
-		CONSTRAINT FK_TABLE6_TO_LongTermAdmin
+		CONSTRAINT FK_siDoGunGuCode_TO_LongTermAdmin
 		FOREIGN KEY (
 			adminPttnCd
 		)
-		REFERENCES TABLE6 (
+		REFERENCES siDoGunGuCode (
 			adminPttnCd
 		);
 
