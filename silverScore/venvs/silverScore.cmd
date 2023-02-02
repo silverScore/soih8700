@@ -1,4 +1,4 @@
 @echo off
 c:
-cd c:/silverScore/project/silverScore
+cd c:/silverScore/projects/silverScore
 c:/silverScore/venvs/silverScore/scripts/activate
