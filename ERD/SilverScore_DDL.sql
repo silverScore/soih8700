@@ -1,6 +1,6 @@
 /* 회원 */
 CREATE TABLE Member (
-	id number(5) NOT NULL, /* 회원id */
+	memberId number(5) NOT NULL, /* 회원id */
 	name varchar(20) NOT NULL, /* 이름 */
 	passwd varchar(15) NOT NULL, /* 비밀번호 */
 	phone char(13) NOT NULL, /* 핸드폰 */
@@ -9,16 +9,11 @@ CREATE TABLE Member (
 );
 
 CREATE UNIQUE INDEX PK_Member
-	ON Member (
-		id ASC
-	);
+	ON Member ( memberId ASC );
 
 ALTER TABLE Member
-	ADD
-		CONSTRAINT PK_Member
-		PRIMARY KEY (
-			id
-		);
+	ADD	CONSTRAINT PK_Member
+		PRIMARY KEY ( memberId );
 
 COMMENT ON TABLE Member IS '회원';
 
@@ -55,18 +50,11 @@ CREATE TABLE LongTermAdmin (
 );
 
 CREATE UNIQUE INDEX PK_LongTermAdmin
-	ON LongTermAdmin (
-		longTermAdminSym ASC,
-		adminPttnCd ASC
-	);
+	ON LongTermAdmin ( longTermAdminSym ASC, adminPttnCd ASC );
 
 ALTER TABLE LongTermAdmin
-	ADD
-		CONSTRAINT PK_LongTermAdmin
-		PRIMARY KEY (
-			longTermAdminSym,
-			adminPttnCd
-		);
+	ADD	CONSTRAINT PK_LongTermAdmin
+		PRIMARY KEY ( longTermAdminSym, adminPttnCd	);
 
 COMMENT ON TABLE LongTermAdmin IS '요양기관';
 
@@ -110,22 +98,17 @@ CREATE TABLE Review (
 	content varchar(2000), /* 내용 */
 	createDate date NOT NULL, /* 작성일 */
 	modifyDate date, /* 수정일 */
-	id number(5) NOT NULL, /* 회원id */
+	memberId number(5) NOT NULL, /* 회원id */
 	longTermAdminSym char(11) NOT NULL, /* 기관기호 */
 	adminPttnCd char(3) NOT NULL /* 기관유형코드 */
 );
 
 CREATE UNIQUE INDEX PK_Review
-	ON Review (
-		reviewId ASC
-	);
+	ON Review ( reviewId ASC );
 
 ALTER TABLE Review
-	ADD
-		CONSTRAINT PK_Review
-		PRIMARY KEY (
-			reviewId
-		);
+	ADD	CONSTRAINT PK_Review
+		PRIMARY KEY ( reviewId );
 
 COMMENT ON TABLE Review IS '리뷰';
 
@@ -141,7 +124,7 @@ COMMENT ON COLUMN Review.createDate IS '작성일';
 
 COMMENT ON COLUMN Review.modifyDate IS '수정일';
 
-COMMENT ON COLUMN Review.id IS '회원id';
+COMMENT ON COLUMN Review.memberId IS '회원id';
 
 COMMENT ON COLUMN Review.longTermAdminSym IS '기관기호';
 
@@ -166,16 +149,11 @@ CREATE TABLE LongTermAdminRating (
 );
 
 CREATE UNIQUE INDEX PK_LongTermAdminRating
-	ON LongTermAdminRating (
-		no ASC
-	);
+	ON LongTermAdminRating ( no ASC );
 
 ALTER TABLE LongTermAdminRating
-	ADD
-		CONSTRAINT PK_LongTermAdminRating
-		PRIMARY KEY (
-			no
-		);
+	ADD	CONSTRAINT PK_LongTermAdminRating
+		PRIMARY KEY ( no );
 
 COMMENT ON TABLE LongTermAdminRating IS '요양기관평가등급';
 
@@ -217,18 +195,11 @@ CREATE TABLE InsttEtcDetail (
 );
 
 CREATE UNIQUE INDEX PK_InsttEtcDetail
-	ON InsttEtcDetail (
-		longTermAdminSym ASC,
-		adminPttnCd ASC
-	);
+	ON InsttEtcDetail ( longTermAdminSym ASC, adminPttnCd ASC );
 
 ALTER TABLE InsttEtcDetail
-	ADD
-		CONSTRAINT PK_InsttEtcDetail
-		PRIMARY KEY (
-			longTermAdminSym,
-			adminPttnCd
-		);
+	ADD	CONSTRAINT PK_InsttEtcDetail
+		PRIMARY KEY ( longTermAdminSym, adminPttnCd	);
 
 COMMENT ON TABLE InsttEtcDetail IS '기관기타현황상세';
 
@@ -249,16 +220,11 @@ CREATE TABLE adminPttnCode (
 );
 
 CREATE UNIQUE INDEX PK_adminPttnCode
-	ON adminPttnCode (
-		adminPttnCd ASC
-	);
+	ON adminPttnCode ( adminPttnCd ASC );
 
 ALTER TABLE adminPttnCode
-	ADD
-		CONSTRAINT PK_adminPttnCode
-		PRIMARY KEY (
-			adminPttnCd
-		);
+	ADD	CONSTRAINT PK_adminPttnCode
+		PRIMARY KEY ( adminPttnCd );
 
 COMMENT ON TABLE adminPttnCode IS '기관유형코드';
 
@@ -290,18 +256,11 @@ CREATE TABLE GeneralSttusDetail (
 );
 
 CREATE UNIQUE INDEX PK_GeneralSttusDetail
-	ON GeneralSttusDetail (
-		longTermAdminSym ASC,
-		adminPttnCd ASC
-	);
+	ON GeneralSttusDetail ( longTermAdminSym ASC, adminPttnCd ASC );
 
 ALTER TABLE GeneralSttusDetail
-	ADD
-		CONSTRAINT PK_GeneralSttusDetail
-		PRIMARY KEY (
-			longTermAdminSym,
-			adminPttnCd
-		);
+	ADD	CONSTRAINT PK_GeneralSttusDetail
+		PRIMARY KEY ( longTermAdminSym, adminPttnCd	);
 
 COMMENT ON TABLE GeneralSttusDetail IS '일반현황상세';
 
@@ -363,18 +322,11 @@ CREATE TABLE InsttSttusDetail (
 );
 
 CREATE UNIQUE INDEX PK_InsttSttusDetail
-	ON InsttSttusDetail (
-		longTermAdminSym ASC,
-		adminPttnCd ASC
-	);
+	ON InsttSttusDetail (	longTermAdminSym ASC,	adminPttnCd ASC );
 
 ALTER TABLE InsttSttusDetail
-	ADD
-		CONSTRAINT PK_InsttSttusDetail
-		PRIMARY KEY (
-			longTermAdminSym,
-			adminPttnCd
-		);
+	ADD	CONSTRAINT PK_InsttSttusDetail
+		PRIMARY KEY ( longTermAdminSym, adminPttnCd	);
 
 COMMENT ON TABLE InsttSttusDetail IS '시설현황상세';
 
@@ -420,18 +372,11 @@ CREATE TABLE AceptncNmprDetail (
 );
 
 CREATE UNIQUE INDEX PK_AceptncNmprDetail
-	ON AceptncNmprDetail (
-		longTermAdminSym ASC,
-		adminPttnCd ASC
-	);
+	ON AceptncNmprDetail ( longTermAdminSym ASC, adminPttnCd ASC );
 
 ALTER TABLE AceptncNmprDetail
-	ADD
-		CONSTRAINT PK_AceptncNmprDetail
-		PRIMARY KEY (
-			longTermAdminSym,
-			adminPttnCd
-		);
+	ADD	CONSTRAINT PK_AceptncNmprDetail
+		PRIMARY KEY ( longTermAdminSym, adminPttnCd	);
 
 COMMENT ON TABLE AceptncNmprDetail IS '입소인원현황상세';
 
@@ -458,18 +403,11 @@ CREATE TABLE siDoGunGuCode (
 );
 
 CREATE UNIQUE INDEX PK_siDoGunGuCode
-	ON siDoGunGuCode (
-		siDoCd ASC,
-		siGunGuCd ASC
-	);
+	ON siDoGunGuCode ( siDoCd ASC, siGunGuCd ASC );
 
 ALTER TABLE siDoGunGuCode
-	ADD
-		CONSTRAINT PK_siDoGunGuCode
-		PRIMARY KEY (
-			siDoCd,
-			siGunGuCd
-		);
+	ADD	CONSTRAINT PK_siDoGunGuCode
+		PRIMARY KEY ( siDoCd,	siGunGuCd );
 
 COMMENT ON TABLE siDoGunGuCode IS '시도군구코드';
 
@@ -481,83 +419,50 @@ COMMENT ON COLUMN siDoGunGuCode.siDoNm IS '시도명';
 
 COMMENT ON COLUMN siDoGunGuCode.siGunGuNm IS '시군구명';
 
-ALTER TABLE LongTermAdmin
-	ADD
-		CONSTRAINT FK_adminPttnCode_TO_LongTermAdmin
-		FOREIGN KEY (
-			adminPttnCd
-		)
-		REFERENCES adminPttnCode (
-			adminPttnCd
-		);
+CREATE INDEX FK_adminPttnCode_TO_LongTermAdmin
+	ON LongTermAdmin ( adminPttnCd ASC );
 
 ALTER TABLE LongTermAdmin
-	ADD
-		CONSTRAINT FK_siDoGunGuCode_TO_LongTermAdmin
-		FOREIGN KEY (
-			siDoCd,
-			siGunGuCd
-		)
-		REFERENCES siDoGunGuCode (
-			siDoCd,
-			siGunGuCd
-		);
+	ADD	CONSTRAINT FK_adminPttnCode_TO_LongTermAdmin
+		FOREIGN KEY ( adminPttnCd )
+		REFERENCES adminPttnCode ( adminPttnCd );
+
+CREATE INDEX FK_siDoGunGuCode_TO_LongTermAdmin
+	ON LongTermAdmin ( siDoCd ASC, siGunGuCd ASC );
+
+ALTER TABLE LongTermAdmin
+	ADD	CONSTRAINT FK_siDoGunGuCode_TO_LongTermAdmin
+		FOREIGN KEY ( siDoCd, siGunGuCd )
+		REFERENCES siDoGunGuCode ( siDoCd, siGunGuCd );
+
+CREATE INDEX FK_Member_TO_Review
+	ON Review ( memberId ASC );
 
 ALTER TABLE Review
-	ADD
-		CONSTRAINT FK_Member_TO_Review
-		FOREIGN KEY (
-			id
-		)
-		REFERENCES Member (
-			id
-		);
+	ADD	CONSTRAINT FK_Member_TO_Review
+		FOREIGN KEY ( memberId )
+		REFERENCES Member ( memberId );
+
+CREATE INDEX FK_LongTermAdmin_TO_Review
+	ON Review ( longTermAdminSym ASC, adminPttnCd ASC );
 
 ALTER TABLE Review
-	ADD
-		CONSTRAINT FK_LongTermAdmin_TO_Review
-		FOREIGN KEY (
-			longTermAdminSym,
-			adminPttnCd
-		)
-		REFERENCES LongTermAdmin (
-			longTermAdminSym,
-			adminPttnCd
-		);
+	ADD  CONSTRAINT FK_LongTermAdmin_TO_Review
+		FOREIGN KEY ( longTermAdminSym, adminPttnCd	)
+		REFERENCES LongTermAdmin ( longTermAdminSym, adminPttnCd );
 
 ALTER TABLE InsttEtcDetail
-	ADD
-		CONSTRAINT FK_LongTermAdmin_TO_InsttEtcDetail
-		FOREIGN KEY (
-			longTermAdminSym,
-			adminPttnCd
-		)
-		REFERENCES LongTermAdmin (
-			longTermAdminSym,
-			adminPttnCd
-		);
+	ADD	CONSTRAINT FK_LongTermAdmin_TO_InsttEtcDetail
+		FOREIGN KEY ( longTermAdminSym, adminPttnCd	)
+		REFERENCES LongTermAdmin ( longTermAdminSym, adminPttnCd );
 
 ALTER TABLE InsttSttusDetail
-	ADD
-		CONSTRAINT FK_LongTermAdmin_TO_InsttSttusDetail
-		FOREIGN KEY (
-			longTermAdminSym,
-			adminPttnCd
-		)
-		REFERENCES LongTermAdmin (
-			longTermAdminSym,
-			adminPttnCd
-		);
+	ADD	CONSTRAINT FK_LongTermAdmin_TO_InsttSttusDetail
+		FOREIGN KEY ( longTermAdminSym, adminPttnCd )
+		REFERENCES LongTermAdmin ( longTermAdminSym, adminPttnCd );
 
 ALTER TABLE AceptncNmprDetail
-	ADD
-		CONSTRAINT FK_LongTermAdmin_TO_AceptncNmprDetail
-		FOREIGN KEY (
-			longTermAdminSym,
-			adminPttnCd
-		)
-		REFERENCES LongTermAdmin (
-			longTermAdminSym,
-			adminPttnCd
-		);
+	ADD	CONSTRAINT FK_LongTermAdmin_TO_AceptncNmprDetail
+		FOREIGN KEY ( longTermAdminSym, adminPttnCd )
+		REFERENCES LongTermAdmin ( longTermAdminSym, adminPttnCd );
 

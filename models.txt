@@ -1,0 +1,17 @@
+class Member(models.Model):
+    memberId = models.PositiveSmallIntegerField(primary_key=True)
+    name = models.CharField(max_length=20)
+    passwd = models.CharField(max_length=15)
+    phone = models.CharField(max_length=13)
+    email = models.EmailField()
+    registerDate = models.DateField()
+
+
+class SiDoGunGuCode(models.Model):
+    siDoCd = models.CharField(max_length=2, primary_key=True)
+    siGunGuCd = models.CharField(max_length=3, primary_key=True)
+    siDoNm = models.CharField(max_length=20)
+    siGunGuNm = models.CharField(max_length=20)
+
+    class Meta:
+        unique_together = (('siDoCd', 'siGunGuCd'),)
