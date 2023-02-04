@@ -30,4 +30,3 @@ class Review(models.Model):
             models.Index(fields=['memberId'], name='FK_Member_Review'),
             models.Index(fields=['longTermAdminSym', 'adminPttnCd'], name='FK_LongTermAdmin_Review'),
         ]
-
