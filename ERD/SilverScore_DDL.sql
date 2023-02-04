@@ -466,6 +466,7 @@ ALTER TABLE AceptncNmprDetail
 		FOREIGN KEY ( longTermAdminSym, adminPttnCd )
 		REFERENCES LongTermAdmin ( longTermAdminSym, adminPttnCd );
 
+/*
 FK_adminPttnCode_TO_LongTermAdmin
 FK_siDoGunGuCode_TO_LongTermAdmin
 
@@ -477,3 +478,5 @@ FK_LongTermAdmin_Review
 FK_LongTermAdmin_InsttEtcD
 FK_LongTermAdmin_InsttSttusD
 FK_LongTermAdmin_AceptncNmprD
+FK_LongTermAdmin_GeneralSttusD
+*/

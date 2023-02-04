@@ -1,0 +1,8 @@
+1) dependency가 있는 model에 대해 다음의 단계로 수행할 것.
+ - care 수행 후, member 수행할 것
+
+python manage.py makemigrations care
+python manage.py migrate care
+
+python manage.py makemigrations member
+python manage.py migrate member

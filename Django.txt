@@ -1115,3 +1115,37 @@ Note that both foreign keys point to the same SiDoGunGuCode model, but they have
 
 
 
+SmallIntegerField
+
+care app 
+
+
+care\migrations\0001_initial.py
+member\migrations\0001_initial.py
+
+when i run the command "python manage.py migrate",
+django.db.migrations.exceptions.InconsistentMigrationHistory: Migration member.0001_initial is applied before its dependency care.0001_initial on database 'default'.
+
+
+at member\migrations\0001_initial.py, i could find the followings.
+    dependencies = [
+        ('care', '0001_initial'),
+    ]
+
+even though i did as your guidance, the same error was occurred.
+if i delete the following statements at 0001_initial.py of member,
+is it possible to solve this error ?
+
+   dependencies = [
+        ('care', '0001_initial'),
+    ]
+
+When I did the following steps, it worked fine
+
+python manage.py makemigrations care
+python manage.py migrate care
+
+python manage.py makemigrations member
+python manage.py migrate member
+
+it works well.
