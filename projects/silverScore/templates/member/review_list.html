@@ -9,11 +9,12 @@
 {% load member_filter %}
 {% block content %}
 <div class="container my-3">
+    <h3 class="border-bottom py-2 text-danger">{{ longtermadmin.adminNm }}</h3>
     <table class="table">
-        <thead>
-        <tr class="text-center table-dark">
-            <th>번호</th>
-            <th style="width:50%">내용</th>
+        <thead class="thead-dark">
+        <tr class="text-center">
+            <th>no.</th>
+            <th style="width:46%">내용</th>
             <th>분위기/친철도</th>
             <th>시설/청결도</th>
             <th>글쓴이</th>
@@ -23,25 +24,19 @@
         <tbody>
         {% if review_list %}
         {% for review in review_list %}
-        <tr class="text-center">
+        <tr class="text-left">
             <!--<td>{{ forloop.counter }}</td>-->
             <td>
                 <!--번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1-->
                 {{ review_list.paginator.count|sub:review_list.start_index|sub:forloop.counter0|add:1 }}
             </td>
             <td class="text-start">
-                <a href="#">test</a>
-                <!--
-                <a href="{% url 'member:detail' review.reviewId %}">{{ review.content }}</a>-->
-                <!--
-                {% if review.answer_set.count > 0 %}
-                <span class="text-danger small mx-2">{{ review.answer_set.count }}</span>
-                {% endif %}
-                -->
+                <a href="{% url 'member:review_detail' review.id %}">{{ review.content|truncatechars:34 }}</a>
             </td>
-            <!-- 멤버
-            <td>{{ review.author.username }}</td>-->     <!--글쓴이 추가-->
-            <td>{{ review.createDate }}</td>
+            <td>{% for i in ""|ljust:review.amKind %}⭐{% endfor %}</td>
+            <td>{% for i in ""|ljust:review.faClean %}⭐{% endfor %}</td>
+            <td><span class="text-info small mx-2">{{ review.user.username }}</span></td>
+            <td><span class="text-info small mx-2">{{ review.createDate }}</span></td>
         </tr>
         {% endfor %}
         {% else %}
@@ -89,7 +84,7 @@
         {% endif %}
     </ul>
     <!--페이징처리 끝-->
-    <!--<a href="#" class="btn btn-primary">후기 등록하기</a>-->
+    <a href="{% url 'member:review_create' longtermadmin.id %}" class="btn btn-primary">후기 남기기</a>
 </div>
 {% endblock %}
 

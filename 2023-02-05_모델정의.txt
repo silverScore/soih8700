@@ -1,0 +1,384 @@
+# care/modesl.py 
+
+class SiDoGunGuCode(models.Model):
+    siDoCd = models.CharField(max_length=2)
+    siGunGuCd = models.CharField(max_length=3)
+    siDoNm = models.CharField(max_length=20)
+    siGunGuNm = models.CharField(max_length=20)
+
+    class Meta:
+        unique_together = (('siDoCd', 'siGunGuCd'),)
+        indexes = [
+            models.Index(fields=['siDoCd', 'siGunGuCd'], name='PK_siDoGunGuCode'),
+        ]
+
+
+class AdminPttnCode(models.Model):
+    adminPttnCd = models.CharField(max_length=3, primary_key=True)
+    adminPttnNm = models.CharField(max_length=40)
+
+    class Meta:
+        unique_together = (('adminPttnCd'),)
+        indexes = [
+            models.Index(fields=['adminPttnCd'], name='PK_adminPttnCode'),
+        ]
+
+
+class LongTermAdmin(models.Model):
+    sidogungucode = models.ForeignKey(SiDoGunGuCode, on_delete=models.CASCADE)
+    adminpttncode = models.ForeignKey(AdminPttnCode, on_delete=models.CASCADE)
+
+    longTermAdminSym = models.CharField(max_length=11)
+    adminPttnCd = models.CharField(max_length=3)
+    siDoCd = models.CharField(max_length=2)
+    siGunGuCd = models.CharField(max_length=3)
+    adminNm = models.CharField(max_length=100)
+    ratingCd = models.CharField(max_length=15, blank=True, null=True)
+    ratingDate = models.DateField()
+    ratingGrade = models.CharField(max_length=1)
+    detailAddr = models.CharField(max_length=1000)
+    telNo = models.CharField(max_length=18)
+    jaehwalCd = models.CharField(max_length=1, blank=True, null=True)
+    chimaeCd = models.CharField(max_length=1, blank=True, null=True)
+    photo = models.ImageField(upload_to='images/', null=True)
+    longTermPeribRgtDt = models.DateField()
+    stpRptDt = models.DateField()
+    adminCd = models.CharField(max_length=1)
+
+    class Meta:
+        unique_together = (('longTermAdminSym', 'adminPttnCd'),)
+        indexes = [
+            models.Index(fields=['adminPttnCd'], name='FK_adminPttnCode_LongTermAdmin'),
+            models.Index(fields=['siDoCd', 'siGunGuCd'], name='FK_siDoGunGuCode_LongTermAdmin'),
+        ]
+
+
+class InsttEtcDetail(models.Model):
+    longtermadmin = models.ForeignKey(LongTermAdmin, on_delete=models.CASCADE)
+
+    longTermAdminSym = models.CharField(max_length=11)
+    adminPttnCd = models.CharField(max_length=3)
+    hmpgAddr = models.CharField(max_length=500, blank=True, null=True)
+    tfMth = models.CharField(max_length=2000)
+    pkngEquip = models.CharField(max_length=2000)
+
+    class Meta:
+        unique_together = (('longTermAdminSym', 'adminPttnCd'),)
+        indexes = [
+            models.Index(fields=['longTermAdminSym', 'adminPttnCd'], name='FK_LongTermAdmin_InsttEtcD'),
+        ]
+
+
+class AceptncNmprDetail(models.Model):
+    longtermadmin = models.ForeignKey(LongTermAdmin, on_delete=models.CASCADE)
+
+    longTermAdminSym = models.CharField(max_length=11)
+    adminPttnCd = models.CharField(max_length=3)
+    totPer = models.SmallIntegerField(null=True)
+    maNowPer = models.SmallIntegerField(null=True)
+    fmNowPer = models.SmallIntegerField(null=True)
+    maRsvPer = models.SmallIntegerField(null=True)
+    fmRsvPer = models.SmallIntegerField(null=True)
+
+    class Meta:
+        unique_together = (('longTermAdminSym', 'adminPttnCd'),)
+        indexes = [
+            models.Index(fields=['longTermAdminSym', 'adminPttnCd'], name='FK_LongTermAdmin_AceptncNmprD'),
+        ]
+
+
+class InsttSttusDetail(models.Model):
+    longtermadmin = models.ForeignKey(LongTermAdmin, on_delete=models.CASCADE)
+
+    longTermAdminSym = models.CharField(max_length=11)
+    adminPttnCd = models.CharField(max_length=3)
+    prsnRoomReal1 = models.SmallIntegerField(default=0)
+    prsnRoomReal2 = models.SmallIntegerField(default=0)
+    prsnRoomReal3 = models.SmallIntegerField(default=0)
+    prsnRoomReal4 = models.SmallIntegerField(default=0)
+    spcAcupRoomReal = models.SmallIntegerField(default=0)
+    ofce = models.SmallIntegerField(default=0)
+    medRoomReal = models.SmallIntegerField(default=0)
+    funcTrnRoomReal = models.SmallIntegerField(default=0)
+    pgmRoomReal = models.SmallIntegerField(default=0)
+    crmnyPrst = models.SmallIntegerField(default=0)
+    batRoom = models.SmallIntegerField(default=0)
+    taxPageLong = models.SmallIntegerField(default=0)
+    taxRoom = models.SmallIntegerField(default=0)
+
+    class Meta:
+        unique_together = (('longTermAdminSym', 'adminPttnCd'),)
+        indexes = [
+            models.Index(fields=['longTermAdminSym', 'adminPttnCd'], name='FK_LongTermAdmin_InsttSttusD'),
+        ]
+
+
+class GeneralSttusDetail(models.Model):
+    longtermadmin = models.ForeignKey(LongTermAdmin, on_delete=models.CASCADE)
+
+    longTermAdminSym = models.CharField(max_length=11)
+    adminPttnCd = models.CharField(max_length=3)
+    adminNm = models.CharField(max_length=100)
+    hmPostNo = models.CharField(max_length=6, null=True)
+    siDoCd = models.CharField(max_length=2)
+    siGunGuCd = models.CharField(max_length=3)
+    HDongCd = models.CharField(max_length=3, null=True)
+    BDongCd = models.CharField(max_length=3, null=True)
+    riCd = models.CharField(max_length=2, null=True)
+    detailAddr = models.CharField(max_length=1000, null=True)
+    roadNmCd = models.CharField(max_length=12, null=True)
+    gunmulMlno = models.CharField(max_length=5, null=True)
+    gunmulSlno = models.CharField(max_length=5, null=True)
+    fl = models.CharField(max_length=10, null=True)
+    locTelNo_1 = models.CharField(max_length=4, null=True)
+    locTelNo_2 = models.CharField(max_length=4, null=True)
+    locTelNo_3 = models.CharField(max_length=10, null=True)
+    longTermPeribRgtDt = models.DateField()
+    StpRptDt = models.DateField()
+
+    class Meta:
+        unique_together = (('longTermAdminSym', 'adminPttnCd'),)
+        indexes = [
+            models.Index(fields=['longTermAdminSym', 'adminPttnCd'], name='FK_LongTermAdmin_GeneralSttusD'),
+        ]
+
+
+class LongTermAdminRating(models.Model):
+    no = models.CharField(max_length=3, primary_key=True)
+    ratingCd = models.CharField(max_length=15, blank=True, null=True)
+    longTermAdminCd = models.CharField(max_length=13, blank=True, null=True)
+    longTermAdminNm = models.CharField(max_length=100, blank=True, null=True)
+    adminPttnName = models.CharField(max_length=20, blank=True, null=True)
+    siDoName = models.CharField(max_length=20, blank=True, null=True)
+    siGunGuName = models.CharField(max_length=20, blank=True, null=True)
+    ratingDate = models.DateField(blank=True, null=True)
+    ratingGrade = models.CharField(max_length=1, blank=True, null=True)
+    opRating = models.SmallIntegerField(blank=True, null=True)
+    safeRating = models.SmallIntegerField(blank=True, null=True)
+    rightRating = models.SmallIntegerField(blank=True, null=True)
+    processRating = models.SmallIntegerField(blank=True, null=True)
+    resultRating = models.SmallIntegerField(blank=True, null=True)
+
+drop table care_sidogungucode;
+drop table care_adminpttncode;
+drop table care_aceptncnmprdetail;
+drop table care_generalsttusdetail;
+drop table care_insttetcdetail;
+drop table care_insttsttusdetail;
+drop table care_longtermadmin;
+drop table care_longtermadminrating;
+drop table care_member;
+drop table care_review;
+
+drop table member_sidogungucode;
+drop table member_adminpttncode;
+drop table member_longtermadmin;
+drop table member_member;
+drop table member_review;
+
+class Review(models.Model):
+    reviewId = models.SmallIntegerField(primary_key=True)
+    amKind = models.SmallIntegerField(default=0)
+    faClean = models.SmallIntegerField(default=0)
+    content = models.CharField(max_length=500, blank=True)
+    createDate = models.DateField()
+    modifyDate = models.DateField(null=True, blank=True)
+
+    memberId = models.SmallIntegerField()
+    longTermAdminSym = models.CharField(max_length=11)
+    adminPttnCd = models.CharField(max_length=3)
+
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    longtermadmin = models.ForeignKey('care.LongTermAdmin', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (('longTermAdminSym', 'adminPttnCd'),)
+        indexes = [
+            models.Index(fields=['memberId'], name='FK_Member_Review'),
+            models.Index(fields=['longTermAdminSym', 'adminPttnCd'], name='FK_LongTermAdmin_Review'),
+        ]
+
+
+
+<script>
+//별점 마킹 모듈 프로토타입으로 생성
+function Rating(){};
+Rating.prototype.rate = 0;
+Rating.prototype.setRate = function(newrate){
+    //별점 마킹 - 클릭한 별 이하 모든 별 체크 처리
+    this.rate = newrate;
+    let items = document.querySelectorAll('.rate_radio');
+    items.forEach(function(item, idx){
+        if(idx < newrate){
+            item.checked = true;
+        }else{
+            item.checked = false;
+        }
+    });
+}
+let rating = new Rating();//별점 인스턴스 생성
+
+document.addEventListener('DOMContentLoaded', function(){
+    //별점선택 이벤트 리스너
+    document.querySelector('.rating1').addEventListener('click',function(e){
+        let elem = e.target;
+        if(elem.classList.contains('rate_radio1')){
+            rating.setRate(parseInt(elem.value));
+        }
+    })
+    document.querySelector('.rating2').addEventListener('click',function(e){
+        let elem = e.target;
+        if(elem.classList.contains('rate_radio2')){
+            rating.setRate(parseInt(elem.value));
+        }
+    })
+});
+</script>
+
+
+
+//별점 마킹 모듈 프로토타입으로 생성
+function Rating(){};
+Rating.prototype.rate1 = 0;
+Rating.prototype.rate2 = 0;
+Rating.prototype.setRate1 = function(newrate){
+    //별점 마킹 - 클릭한 별 이하 모든 별 체크 처리
+    this.rate = newrate;
+
+    let items1 = document.querySelectorAll('.rate_radio1');
+
+    items1.forEach(function(item, idx){
+        if(idx < newrate){
+            item.checked = true;
+        }else{
+            item.checked = false;
+        }
+    });
+}
+
+Rating.prototype.setRate2 = function(newrate){
+    //별점 마킹 - 클릭한 별 이하 모든 별 체크 처리
+    this.rate = newrate;
+
+    let items2 = document.querySelectorAll('.rate_radio2');
+
+    items2.forEach(function(item, idx){
+        if(idx < newrate){
+            item.checked = true;
+        }else{
+            item.checked = false;
+        }
+    });
+}
+let rating1 = new Rating();//별점 인스턴스 생성
+let rating2 = new Rating();//별점 인스턴스 생성
+
+document.addEventListener('DOMContentLoaded', function(){
+    //별점선택 이벤트 리스너
+    document.querySelector('.rating1').addEventListener('click',function(e){
+        let elem = e.target;
+        if(elem.classList.contains('rate_radio1')){
+            rating1.setRate1(parseInt(elem.value));
+        }
+    })
+    document.querySelector('.rating2').addEventListener('click',function(e){
+        let elem = e.target;
+        if(elem.classList.contains('rate_radio2')){
+            rating2.setRate2(parseInt(elem.value));
+        }
+    })
+});
+
+
+
+
+.rating1 .rate_radio1 {
+    position: relative;
+    display: inline-block;
+    z-index: 20;
+    opacity: 0.001;
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+    cursor: pointer;
+    vertical-align: top;
+    display: none;
+}
+.rating1 .rate_radio1 + label {
+    position: relative;
+    display: inline-block;
+    margin-left: -4px;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    background-image: url('/static/img/starrate.png');
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+.rating1 .rate_radio1:checked + label {
+    background-color: #ff8;
+}
+.rating2 .rate_radio2 {
+    position: relative;
+    display: inline-block;
+    z-index: 20;
+    opacity: 0.001;
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+    cursor: pointer;
+    vertical-align: top;
+    display: none;
+}
+.rating2 .rate_radio2 + label {
+    position: relative;
+    display: inline-block;
+    margin-left: -4px;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    background-image: url('/static/img/starrate.png');
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+.rating2 .rate_radio2:checked + label {
+    background-color: #ff8;
+}
+
+
+<div class="rating1" >
+                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
+                <input type="checkbox" name="rating" id="rating1_1" value="1" class="rate_radio1" title="1점">
+                <label for="rating1_1"></label>
+                <input type="checkbox" name="rating" id="rating1_2" value="2" class="rate_radio1" title="2점">
+                <label for="rating1_2"></label>
+                <input type="checkbox" name="rating" id="rating1_3" value="3" class="rate_radio1" title="3점" >
+                <label for="rating1_3"></label>
+                <input type="checkbox" name="rating" id="rating1_4" value="4" class="rate_radio1" title="4점">
+                <label for="rating1_4"></label>
+                <input type="checkbox" name="rating" id="rating1_5" value="5" class="rate_radio1" title="5점">
+                <label for="rating1_5"></label>
+            </div>
+
+======
+user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+
+
+       <form method="post" action="{% url 'common:signup' %}">
+        {% if request.user == review.user %}
+         <button type="submit" class="btn btn-primary">후기 수정</button>
+            <a href="{% url 'member:review_modify' review.id %}"
+               class="btn btn-primary">후기 수정</a>
+         </form>    
+            <a href="javascript:void(0)" class="delete btn btn-primary"
+               data-uri="{% url 'member:review_delete' review.id %}">후기 삭제</a>
+        {% endif %}
+         </form>     
+
+
+<!--  <form method="post" action="{% url 'member:review_create' longtermadmin.id %}">-->
