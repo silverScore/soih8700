@@ -1,0 +1,37 @@
+
+.rating{
+	height: 60px;
+	width: 300px;
+	background-color: #f0f0f0;
+}
+.rating .rate_radio {
+    position: relative;
+    display: inline-block;
+    z-index: 20;
+    opacity: 0.001;
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+    cursor: pointer;
+    vertical-align: top;
+    display: none;
+}
+.rating .rate_radio + label {
+    position: relative;
+    display: block;
+    float: left;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    background-image: url('/static/img/star.png');
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+    cursor: pointer;
+}
+/* #ff8 #ff8f03 #fce079 #fef1bf */
+.rating .ratefill {
+    background-color: #fce079;
+    width: 0;
+    height: 60px;
+    position: absolute;
+}

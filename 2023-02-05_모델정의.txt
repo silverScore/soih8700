@@ -382,3 +382,21 @@ user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
 <!--  <form method="post" action="{% url 'member:review_create' longtermadmin.id %}">-->
+
+<div class="ratefill" style="width: {{ review.amKind * 60 }} px;"></div> doesn't work. 
+Could not parse the remainder: ' * 60' from 'review.amKind * 60'
+
+
+var reviewScore = 1.5;
+var numberOfStars = 5;
+
+// Check the stars based on the review score
+for (var i = 0; i < numberOfStars; i++) {
+  var starElement = document.getElementById("rating1" + (i + 1));
+  if (i < reviewScore) {
+    starElement.checked = true;
+  } else {
+    starElement.checked = false;
+  }
+}
+
