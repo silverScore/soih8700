@@ -21,11 +21,10 @@ def review_index(request, longtermadmin_id):
 
 def review_detail(request, review_id):
     review = get_object_or_404(Review, pk=review_id)
-#    longtermadmin = get_object_or_404(LongTermAdmin, id=review.longtermadmin.longtermadmin_id)
-#    context = {'review': review, 'longtermadmin': longtermadmin}
-#    return render(request, 'member/review_detail.html', context)
-    context = {'review': review}
+    context = {'review': review, 'longtermadmin': review.longtermadmin }
     return render(request, 'member/review_detail.html', context)
+#    context = {'review': review}
+#    return render(request, 'member/review_detail.html', context)
 
 @login_required(login_url='common:login')
 def review_create(request, longtermadmin_id):
@@ -47,6 +46,7 @@ def review_create(request, longtermadmin_id):
 @login_required(login_url='common:login')
 def review_modify(request, review_id):
     review = get_object_or_404(Review, pk=review_id)
+
     if request.user != review.user :
         messages.error(request, '수정권한이 없습니다')
         return redirect('member:review_detail', review_id=review.id)
@@ -59,7 +59,8 @@ def review_modify(request, review_id):
             return redirect('member:review_detail', review_id=review.id)
     else:
         form = ReviewForm(instance=review)
-    context = {'review': review, 'form': form}
+    context = {'review': review, 'longtermadmin': review.longtermadmin, 'form': form}
+#    context = {'review': review, 'form': form}
     return render(request, 'member/review_modify.html', context)
 
 @login_required(login_url='common:login')
@@ -69,4 +70,6 @@ def review_delete(request, review_id):
         messages.error(request, '삭제권한이 없습니다')
         return redirect('member:review_detail', review_id=review.id)
     review.delete()
-    return redirect('member:review_index')
+    context = {'review': review, 'longtermadmin': review.longtermadmin, 'form': form}
+    return render(request, 'member/review_list.html', context)
+#    return redirect('member:review_index')

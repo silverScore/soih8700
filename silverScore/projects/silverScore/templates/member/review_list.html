@@ -31,7 +31,8 @@
                 {{ review_list.paginator.count|sub:review_list.start_index|sub:forloop.counter0|add:1 }}
             </td>
             <td class="text-start">
-                <a href="{% url 'member:review_detail' review.id %}">{{ review.content|truncatechars:34 }}</a>
+                <a class="text-decoration-none"
+                   href="{% url 'member:review_detail' review.id %}">{{ review.content|truncatechars:34 }}</a>
             </td>
             <td>{% for i in ""|ljust:review.amKind %}⭐{% endfor %}</td>
             <td>{% for i in ""|ljust:review.faClean %}⭐{% endfor %}</td>

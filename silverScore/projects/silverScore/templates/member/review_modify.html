@@ -8,7 +8,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-  <h3 class="my-3 border-bottom py-2 text-danger">후기 수정</h2>
+  <h3 class="my-3 border-bottom py-2 text-danger">{{ longtermadmin.adminNm }} 후기 수정</h3>
     <form method="post">
 
     {% csrf_token %}
@@ -59,8 +59,11 @@
         <label for="content" class="form-label">내용</label>
         <textarea class="form-control"
                   name="content" id="content" rows="10" maxlength="500" required>{{ review.content }}</textarea>
-            <!--{{ form.content.value|default_if_none:'' }}</textarea>-->
     </div>
+
+    <a href="{% url 'member:review_index' longtermadmin.id %}" class="back_to_list btn btn-secondary">
+                <i class="fas fa-list"></i> 목록으로 </a>
+
     <button type="submit" class="btn btn-primary">수정 완료</button>
   </form>
 </div>
@@ -122,6 +125,21 @@ var faClean_width = review_faClean * 60;
 // Set the width of the .ratefill element
 document.getElementById("ratefill1").style.width = amKind_width + "px";
 document.getElementById("ratefill2").style.width = faClean_width + "px";
+
+for (var i = 0; i < 5; i++) {
+  var amKindElement = document.getElementById("rating1" + (i + 1));
+  var faCleanElement = document.getElementById("rating2" + (i + 1));
+  if (i < review_amKind) {
+    amKindElement.checked = true;
+  } else {
+    amKindElement.checked = false;
+  }
+  if (i < review_faClean) {
+    faCleanElement.checked = true;
+  } else {
+    faCleanElement.checked = false;
+  }
+}
 </script>
 {% endblock %}
 </body>
